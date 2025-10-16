@@ -63,7 +63,11 @@ class VolumeFactory:
         final_noise_conf = self.config['final_noise']
         if final_noise_conf['type'] == 'simplex':
             print("Applying final smooth Simplex noise...")
-            master_grid = noise.apply_simplex_noise(master_grid, **final_noise_conf)
+
+            simplex_params = final_noise_conf.copy()
+            simplex_params.pop('type', None) # Safely remove the key
+
+            master_grid = noise.apply_simplex_noise(master_grid, **simplex_params)
             
         print("🎉 Volume generation complete!")
         return master_grid

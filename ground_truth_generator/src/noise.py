@@ -1,7 +1,6 @@
 # src/noise.py
 import numpy as np
 import noise as pnoise # aliased to avoid name clash
-from numba import njit
 from src.utils import normalize_vectors
 
 def apply_random_noise(grid: np.ndarray, level: float) -> np.ndarray:
@@ -10,7 +9,6 @@ def apply_random_noise(grid: np.ndarray, level: float) -> np.ndarray:
     noisy_grid = grid + noise_vectors * level
     return normalize_vectors(noisy_grid)
 
-@njit(cache=True)
 def _compute_simplex_noise(shape, scale, octaves, seed):
     """Numba-jitted core for fast Simplex noise generation."""
     noise_field = np.zeros(shape + (3,))
