@@ -1,6 +1,6 @@
 # src/noise.py
 import numpy as np
-import noise as pnoise # aliased to avoid name clash
+import noise as pnoise 
 from src.utils import normalize_vectors
 
 def apply_random_noise(grid: np.ndarray, level: float) -> np.ndarray:
@@ -10,7 +10,7 @@ def apply_random_noise(grid: np.ndarray, level: float) -> np.ndarray:
     return normalize_vectors(noisy_grid)
 
 def _compute_simplex_noise(shape, scale, octaves, seed):
-    """Numba-jitted core for fast Simplex noise generation."""
+    """Simplex noise generation."""
     noise_field = np.zeros(shape + (3,))
     for i in range(shape[0]):
         for j in range(shape[1]):
@@ -22,7 +22,7 @@ def _compute_simplex_noise(shape, scale, octaves, seed):
     return noise_field
 
 def apply_simplex_noise(grid: np.ndarray, strength: float, scale: float, octaves: int) -> np.ndarray:
-    """Applies 3D Simplex noise to a vector field using a fast Numba core."""
+    """Applies 3D Simplex noise to a vector field."""
     seed = np.random.randint(0, 100)
     noise_field = _compute_simplex_noise(grid.shape[:3], scale, octaves, seed)
     perturbed_grid = grid + noise_field * strength
